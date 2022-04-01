@@ -1,3 +1,6 @@
+from math import sqrt, gcd
+
+from pyparsing import alphanums
     # <QUESTION 1>
 
     # Given a string, return the boolean True if it ends in "py", and False if not. Ignore Case.
@@ -14,8 +17,16 @@
     # What was the name of the function we have seen which changes the case of a string?  Use your CLI to access the Python documentation and get help(str).
     
     
-    def endsPy(input):
-        return ""
+def endsPy(input):
+    outcome = 0
+    if type(input) is str:
+        if input[-2:].lower() == "py":
+            outcome = True
+        else:
+            outcome = False
+    else:
+        outcome = "Please enter a string" 
+    return outcome
 
     
 # <QUESTION 2>
@@ -31,7 +42,14 @@
 # one(['tic', 'tac', 'toe']) → {'tic':1, 'tac':1, 'toe':1}
     
 def one(items):
-    pass
+    if type(items) is list:
+        items_set = set(items) #set only stores unique items
+        item_dict = dict() #dict to refer to later
+        for i in items_set:
+            item_dict[i] = items.count(i) #counts items in the list
+        return item_dict
+    else: 
+        return "Please enter a list"
 
 # <QUESTION 3>
 
@@ -48,8 +66,20 @@ def one(items):
 # two(-5, 2, '/') → -2.5
 
 def two(a, b, operator):
-    pass
-
+    if type(a) and type(b) is int or float:
+        if operator == '+':
+            return a + b
+        elif operator == '-':
+            return a - b 
+        elif operator == '*':
+            return a*b
+        elif operator == '/':
+            return a/b
+        else:
+            return "please enter the correct operator"
+    else:
+        return "Please enter integers"
+    
 # <QUESTION 4>
 
 # Given a positive integer, return the next integer below it that has an
@@ -68,7 +98,15 @@ def two(a, b, operator):
 # We can use `x ** 0.5` to get the square root of `x`
 
 def three(num):
-    pass
+    if type(num) is int and num >= 0: 
+        sqrt_num = 0
+        while sqrt_num == 0:
+            if (num**0.5)%1 == 0:
+                sqrt_num = (num**0.5)
+                return int(sqrt_num)
+            else:
+                num = num - 1
+
 
 # <QUESTION 5>
 
@@ -81,7 +119,22 @@ def three(num):
 # four(10, 50) → 10
 
 def four(a, b):
-    pass
+    a_factors = []
+    b_factors = []
+    highest_number = 1
+    for i in range(1, a):
+        if a%i == 0:
+            a_factors.append(i)
+    for j in range(1, b):
+        if b%j == 0:
+            b_factors.append(j)
+    for k in a_factors:
+        if k in b_factors:
+            if k > highest_number:
+                highest_number = k
+    return highest_number
+    
+
 
 # <QUESTION 6>
 
@@ -101,4 +154,14 @@ def four(a, b):
 # five('54321') → '54321'
 
 def five(string):
-    pass
+    alpabets = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    for i in string:
+        if i in alpabets:
+            previous_letter = alpabets[alpabets.index(i)-1]
+            string = string.replace(i, previous_letter, 1)
+        elif i.upper() in alpabets:
+            previous_letter = alpabets[alpabets.index(i.upper())-1]
+            string = string.replace(i.lower(), previous_letter.lower(), 1)
+    return string
+
+
